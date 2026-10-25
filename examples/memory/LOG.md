@@ -9,7 +9,7 @@
 ## 2026-10-24 15:12 · ZCode
 
 - 做了：订单列表分页优化，P95 1.8s → 300ms
-- 改动：api/orders.py、db/indexes.sql（新增 idx_orders_user_created）
+- 改动：api/OrdersController.java、db/migrations/V6__orders_index.sql（新增 idx_orders_user_created）
 - 遗留：无
 
 ## 2026-10-23 10:05 · Claude Code
