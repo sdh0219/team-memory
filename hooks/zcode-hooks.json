@@ -1,0 +1,15 @@
+{
+  "//": "team-memory 第三道保险模板：会话结束提醒更新记忆。合并进 ~/.zcode/settings.json，字段以 ZCode 当前文档为准。",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"[team-memory] 收工前：更新 .memory/STATE.md，并在 .memory/LOG.md 顶部追加交接记录（≤10 行）。\""
+          }
+        ]
+      }
+    ]
+  }
+}

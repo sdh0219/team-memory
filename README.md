@@ -57,6 +57,8 @@
 管蒸馏——项目主人怎么看进度（把 LOG + git log 蒸馏成周报/日报）。安装脚本会把 `skills/`
 下所有成员一并装好，后续新成员自动纳入。
 
+本仓库自己就运行着 team-memory（见 `.memory/` 目录），CI 在每次 push 时自动校验记忆文件——协议好不好，仓库先跑给你看。
+
 ## 2. 为什么是文件，不是记忆服务
 
 | | team-memory | MemOS / mem0 / Letta |
@@ -103,6 +105,11 @@ powershell -File scripts\install.ps1 -Target zcode # 或指定：zcode / agents 
 
 把 [协议原文](#5-协议原文) 粘进项目的 `AGENTS.md`，再照
 [examples/](examples/) 建两个记忆文件就行——协议本身不依赖任何工具。
+
+### 3.4 第三道保险：hooks 自动提醒
+
+`hooks/` 目录里有 ZCode 和 Claude Code 的 Stop 钩子模板——会话结束时自动弹一句"更新记忆了吗？"。
+skill 主动触发、AGENTS.md 被动约束、hooks 强制提醒，三道保险齐了。
 
 ## 4. 工作机制
 
@@ -164,6 +171,7 @@ python scripts/archive_log.py       # LOG 超过 100 条自动归档到 LOG-arch
 
 - [协议规范](docs/protocol.md) — 两个文件的完整定义、字段表、反模式清单（[English](docs/protocol_EN.md)）
 - [常见问题](docs/faq.md) — 污染历史？并发写？和自带记忆的区别？agent 不听话怎么办？（[English](docs/faq_EN.md)）
+- [hooks/](hooks/README.md) — 第三道保险：会话结束自动提醒的钩子模板
 
 ## 8. 贡献
 

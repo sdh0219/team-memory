@@ -61,6 +61,9 @@ next agent resumes), `team-digest` handles distillation (weekly/daily digests of
 git log for the project owner). The install script installs every member under `skills/`
 — future members join automatically.
 
+This repo runs team-memory on itself (see the `.memory/` directory), and CI validates the
+memory files on every push — the protocol demonstrated by its own home.
+
 ## 2. Why files, not a memory service
 
 | | team-memory | MemOS / mem0 / Letta |
@@ -110,6 +113,12 @@ Copy `skills/team-memory/` into your agent's skill directory
 
 Paste [the protocol](#5-the-protocol) into your project's `AGENTS.md` and create the two
 files following [examples/](examples/) — the protocol depends on no tooling.
+
+### 3.4 The third safety layer: hook reminders
+
+The `hooks/` directory ships Stop-hook templates for ZCode and Claude Code — a session-end
+nudge asking "did you update the memory?". The skill triggers actively, AGENTS.md constrains
+passively, hooks remind forcibly: three layers of insurance.
 
 ## 4. How it works
 
@@ -173,6 +182,7 @@ back; never write secrets or tokens into memory files — they live in git histo
 
 - [Protocol spec](docs/protocol_EN.md) — full definitions, field tables, anti-patterns ([中文](docs/protocol.md))
 - [FAQ](docs/faq_EN.md) — repo pollution? concurrent writes? vs built-in memory? misbehaving agents? ([中文](docs/faq.md))
+- [hooks/](hooks/README.md) — the third safety layer: session-end reminder hook templates
 
 ## 8. Contributing
 

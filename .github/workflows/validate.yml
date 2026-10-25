@@ -1,0 +1,22 @@
+name: validate-memory
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate repo's own memory (.memory/)
+        run: python scripts/validate_memory.py .memory
+
+      - name: Validate example memory (examples/memory)
+        run: python scripts/validate_memory.py examples/memory
