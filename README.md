@@ -171,6 +171,7 @@ python scripts/archive_log.py       # LOG 超过 100 条自动归档到 LOG-arch
 
 - [协议规范](docs/protocol.md) — 两个文件的完整定义、字段表、反模式清单（[English](docs/protocol_EN.md)）
 - [常见问题](docs/faq.md) — 污染历史？并发写？和自带记忆的区别？agent 不听话怎么办？（[English](docs/faq_EN.md)）
+- [token 实测](docs/benchmark.md) — 真实项目冷启动 44.7 万 token vs STATE.md 221 token，约 2000 倍（[English](docs/benchmark_EN.md)）
 - [hooks/](hooks/README.md) — 第三道保险：会话结束自动提醒的钩子模板
 
 ## 8. 贡献

@@ -1,20 +1,19 @@
-# 项目状态（活文档 · 最后更新：2026-10-25 · ZCode）
+# 项目状态（活文档 · 最后更新：2026-10-26 · ZCode）
 
 ## 正在做
 
-- 抖音宣传片制作（ai-video 工厂 team-memory-promo 项目，8 场景已编码，渲染中）
-- 探索家族新成员 team-rules / team-review 的可行性
+- 抖音宣传片大扩编（14 幕 82s 版渲染中，新增玄机 solo/校验器/实测对比三幕）
 
 ## 下一步
 
-- 量化 benchmark 文档：实测"有/无记忆层"的 agent 接手 token 对比
-- 把 hooks 自动提醒推广给常用项目（模板在 hooks/）
-- 宣传片发布后回填真实数据（播放/星标）
+- 宣传片发布（勾选 AI 生成声明 + BGM CC-BY 署名），发布后回填播放/星标数据
+- 家族新成员 team-rules / team-review 可行性探索
 
 ## 近期完成
 
+- 2026-10-26：token benchmark 上线——susu-tools 实测冷读 447,024 tok vs STATE 221 tok（≈2000×）
+- 2026-10-25：hooks/（Stop 钩子模板）+ CI 校验 + 仓库自食狗粮（.memory/ + 根 AGENTS.md）
 - 2026-10-25：家族扩展（team-digest + 校验/归档工具 + 分层术语 + 生命周期纪律）
-- 2026-10-25：示例自洽修复（技术栈统一 Maven、LOG 日期引用补齐）
 - 2026-10-25：安装脚本 set -u 展开顺序 bug 修复（db7f8c2）
 
 ## 坑与约定
@@ -23,3 +22,5 @@
   README.md、README_EN.md、examples/AGENTS.md
 - 本机 git 推 GitHub 走代理：git -c http.proxy=http://127.0.0.1:7897
 - 本机 `python` 是商店占位符，跑脚本用 anaconda 或 bilinote 运行时
+- 渲染 Remotion 前先杀 3000 端口残留 node（netstat 找 LISTENING PID → taskkill），否则随机 404
+

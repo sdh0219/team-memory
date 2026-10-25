@@ -182,6 +182,7 @@ back; never write secrets or tokens into memory files — they live in git histo
 
 - [Protocol spec](docs/protocol_EN.md) — full definitions, field tables, anti-patterns ([中文](docs/protocol.md))
 - [FAQ](docs/faq_EN.md) — repo pollution? concurrent writes? vs built-in memory? misbehaving agents? ([中文](docs/faq.md))
+- [Token benchmark](docs/benchmark_EN.md) — real project cold read 447,024 tokens vs 221 for STATE.md, ~2000× ([中文](docs/benchmark.md))
 - [hooks/](hooks/README.md) — the third safety layer: session-end reminder hook templates
 
 ## 8. Contributing

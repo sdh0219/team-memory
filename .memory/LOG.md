@@ -1,5 +1,11 @@
 # 操作日志（只追加，最新在上）
 
+## 2026-10-26 00:40 · ZCode
+
+- 做了：token benchmark 落地——scripts/benchmark.py + 双语文档；susu-tools 实测冷读 447,024 tok vs STATE 221 tok
+- 改动：scripts/benchmark.py、docs/benchmark.md、docs/benchmark_EN.md、README.md、README_EN.md、.memory/
+- 遗留：宣传片 82s 大扩编版渲染中；benchmark 数字已用于视频 S14 幕
+
 ## 2026-10-25 23:30 · ZCode
 
 - 做了：抖音宣传片进入渲染（8 场景 Remotion 合成 + 三位 AI 娘原创角色）
