@@ -97,6 +97,10 @@ powershell -File scripts\install.ps1 -Target zcode # or: zcode / agents / claude
 
 Then tell your agent: “初始化 team-memory 记忆层” / "set up team-memory for this project".
 
+Say “生成本周项目周报” / "generate this week's project digest" to trigger `team-digest`,
+the second family member — it distills LOG + git log into a progress report and treats
+memory files as read-only.
+
 ### 3.2 Manual install
 
 Copy `skills/team-memory/` into your agent's skill directory
@@ -129,6 +133,15 @@ Four disciplines carry the whole protocol: **rewrite STATE, never append; LOG is
 append-only; details go into commit messages; a "doing" item untouched for two weeks
 gets updated or moved back**. Full spec in
 [docs/protocol_EN.md](docs/protocol_EN.md).
+
+Beyond the protocol, two official tools keep the memory honest:
+
+```bash
+python scripts/validate_memory.py   # validate .memory/: line limits, sections, date order, secret leaks
+python scripts/archive_log.py       # archive LOG.md into LOG-archive.md past 100 entries
+```
+
+Run validate before finishing work or in CI — discipline drifts, tools don't.
 
 ## 5. The protocol
 

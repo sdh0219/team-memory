@@ -92,6 +92,8 @@ powershell -File scripts\install.ps1 -Target zcode # 或指定：zcode / agents 
 
 装好后对 agent 说一句「给这个项目初始化 team-memory 记忆层」即可。
 
+对 agent 说「生成本周项目周报」可触发家族成员 team-digest——它把 LOG 和 git log 蒸馏成进度报告，对记忆文件只读。
+
 ### 3.2 手动安装
 
 把 `skills/team-memory/` 整个目录复制到你 agent 的技能目录
@@ -123,6 +125,15 @@ powershell -File scripts\install.ps1 -Target zcode # 或指定：zcode / agents 
 四条纪律撑起整个协议：**STATE 改写不追加，LOG 只追加不修改，细节进 commit message，
 「正在做」两周没动就更新或回退**。
 完整规范见 [docs/protocol.md](docs/protocol.md)。
+
+协议之外还有两个官方工具帮记忆保鲜：
+
+```bash
+python scripts/validate_memory.py   # 校验 .memory/：行数上限、小节完整、日期顺序、密钥泄露
+python scripts/archive_log.py       # LOG 超过 100 条自动归档到 LOG-archive.md
+```
+
+建议收工前或 CI 里跑一下 validate——纪律会松，工具不会。
 
 ## 5. 协议原文
 
