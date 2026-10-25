@@ -11,6 +11,7 @@
 
 ## 近期完成
 
+- 2026-10-26：协议六处同步检查器 sync_check.py 进 CI（篡改测试能抓）；topics 上线；分享图就绪
 - 2026-10-26：token benchmark 上线——susu-tools 实测冷读 447,024 tok vs STATE 221 tok（≈2000×）
 - 2026-10-25：hooks/（Stop 钩子模板）+ CI 校验 + 仓库自食狗粮（.memory/ + 根 AGENTS.md）
 - 2026-10-25：家族扩展（team-digest + 校验/归档工具 + 分层术语 + 生命周期纪律）

@@ -1,5 +1,12 @@
 # 操作日志（只追加，最新在上）
 
+## 2026-10-26 01:25 · ZCode
+
+- 做了：第二梯队优化——协议同步检查器（正负例验证过）+ CI 第三道步骤、社交分享图 1280x640、
+  GitHub topics（agent-memory/ai-agents/claude-code 等 10 个，PUT 200）
+- 改动：scripts/sync_check.py、.github/workflows/validate.yml、assets/social-preview.{svg,png}、.memory/
+- 遗留：social preview 需用户在仓库 Settings → Social preview 手动上传 assets/social-preview.png（API 不支持）
+
 ## 2026-10-26 00:40 · ZCode
 
 - 做了：token benchmark 落地——scripts/benchmark.py + 双语文档；susu-tools 实测冷读 447,024 tok vs STATE 221 tok

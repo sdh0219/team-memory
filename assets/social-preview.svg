@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-label="team-memory social preview">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="0.55" stop-color="#1e1b4b"/>
+      <stop offset="1" stop-color="#4c1d95"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#34d399"/>
+      <stop offset="1" stop-color="#60a5fa"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="640" fill="url(#bg)"/>
+
+  <!-- 左：三个记忆文件卡 -->
+  <g font-family="Consolas, 'Courier New', monospace" font-weight="bold">
+    <rect x="80" y="120" width="190" height="180" rx="18" fill="#34d399" opacity="0.94"/>
+    <text x="175" y="222" font-size="26" fill="#0b1220" text-anchor="middle">STATE</text>
+    <rect x="150" y="170" width="190" height="180" rx="18" fill="#60a5fa" opacity="0.94"/>
+    <text x="245" y="272" font-size="26" fill="#0b1220" text-anchor="middle">LOG</text>
+    <rect x="220" y="300" width="230" height="64" rx="14" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="335" y="341" font-size="22" fill="#f59e0b" text-anchor="middle">AGENTS.md</text>
+  </g>
+  <line x1="80" y1="430" x2="450" y2="430" stroke="url(#bar)" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- 右：标题区 -->
+  <g font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+    <text x="540" y="230" font-size="86" font-weight="bold" fill="#ffffff">team-memory</text>
+    <text x="540" y="292" font-size="30" fill="#c7d2fe">两个 Markdown 文件 · 一套协议 · 所有 agent 共享记忆</text>
+    <text x="540" y="336" font-size="22" fill="#8b95b0">Two Markdown files. One protocol. Every agent stays in sync.</text>
+  </g>
+
+  <!-- 底部徽章条 -->
+  <g font-family="Consolas, monospace" font-size="20">
+    <rect x="540" y="400" width="120" height="40" rx="20" fill="none" stroke="#475569"/>
+    <text x="600" y="426" fill="#cbd5e1" text-anchor="middle">MIT</text>
+    <rect x="672" y="400" width="220" height="40" rx="20" fill="none" stroke="#475569"/>
+    <text x="782" y="426" fill="#cbd5e1" text-anchor="middle">2 files + AGENTS.md</text>
+    <rect x="904" y="400" width="140" height="40" rx="20" fill="none" stroke="#475569"/>
+    <text x="974" y="426" fill="#cbd5e1" text-anchor="middle">git-native</text>
+    <rect x="1056" y="400" width="150" height="40" rx="20" fill="none" stroke="#f59e0b66"/>
+    <text x="1131" y="426" fill="#f59e0b" text-anchor="middle">≈2000× fewer</text>
+  </g>
+
+  <!-- 底部：实测对比微条 -->
+  <g>
+    <rect x="540" y="480" width="640" height="18" rx="9" fill="#ef4444" opacity="0.85"/>
+    <text x="1185" y="495" font-family="Consolas, monospace" font-size="16" fill="#f87171" text-anchor="end"> 447,024 tok 冷启动通读</text>
+    <rect x="540" y="520" width="8" height="18" rx="4" fill="#34d399"/>
+    <text x="565" y="535" font-family="Consolas, monospace" font-size="16" fill="#34d399">221 tok · team-memory（实测 susu-tools）</text>
+  </g>
+</svg>
