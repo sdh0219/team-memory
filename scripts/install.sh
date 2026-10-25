@@ -7,7 +7,8 @@ set -euo pipefail
 SKILLS_DIR="$(cd "$(dirname "$0")/.." && pwd)/skills"
 
 install_skill_to() {
-  local skill="$1" base="$2" dest="$base/$skill"
+  local skill="$1" base="$2"
+  local dest="$base/$skill"
   # 只允许写入家目录之下，防御 HOME 被设为空值或异常路径
   case "$dest" in
     "$HOME"/*) ;;
