@@ -1,75 +1,160 @@
-# team-memory
+<div align="center">
+  <p>
+    <img src="assets/banner.svg" alt="team-memory：多 agent 共享记忆层" width="100%">
+  </p>
+  <p>
+    <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/sdh0219/team-memory"></a>
+    <a href="#3-快速开始"><img alt="Install" src="https://img.shields.io/badge/install-script%20%7C%20manual-111827"></a>
+    <a href="#4-工作机制"><img alt="Protocol" src="https://img.shields.io/badge/protocol-2_Markdown_files_%2B_AGENTS.md-2EA043?logo=git&amp;logoColor=white"></a>
+    <a href="README_EN.md"><img alt="Language" src="https://img.shields.io/badge/language-中文%20%7C%20English-1f6feb"></a>
+    <a href="https://github.com/sdh0219/team-memory/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/sdh0219/team-memory?style=social"></a>
+  </p>
+  <p>
+    <a href="#3-快速开始">快速开始</a>
+    · <a href="#4-工作机制">工作机制</a>
+    · <a href="#5-协议原文">协议原文</a>
+    · <a href="examples/">示例</a>
+    · <a href="docs/faq.md">FAQ</a>
+    · <a href="README_EN.md">English</a>
+  </p>
+</div>
 
-![type](https://img.shields.io/badge/type-skill-9B4DE0?logo=markdown&logoColor=white)
-![protocol](https://img.shields.io/badge/protocol-2_Markdown_files_%2B_AGENTS.md-2EA043?logo=git&logoColor=white)
-![license](https://img.shields.io/github/license/sdh0219/team-memory)
-![stars](https://img.shields.io/github/stars/sdh0219/team-memory?style=social)
-![last commit](https://img.shields.io/github/last-commit/sdh0219/team-memory)
+---
 
-A file-based shared memory layer for multi-agent coding teams — two Markdown files and one protocol let any agent pick up where the last one left off. No server, no vector DB, git-native.
+**team-memory** 让一群 agent 接力干同一个项目时不再互相失忆：每个 agent 开工只读一个
+50 行以内的状态文件就能接上进度，收工时留一条 10 行以内的蒸馏日志。协议写进
+`AGENTS.md`，所以**不装任何东西的 agent 也会遵守**。零服务器、零向量库，git 原生。
 
-Heavyweight memory systems (MemOS, mem0, Letta…) give agents database-backed memory as infrastructure. **team-memory is the other end of the spectrum**: two plain Markdown files inside your repo, plus a short protocol in `AGENTS.md`. If your project runs on git, it already has everything team-memory needs.
+## 目录
 
-## Why
+- [1. 这是什么](#1-这是什么)
+- [2. 为什么是文件，不是记忆服务](#2-为什么是文件不是记忆服务)
+- [3. 快速开始](#3-快速开始)
+- [4. 工作机制](#4-工作机制)
+- [5. 协议原文](#5-协议原文)
+- [6. 示例](#6-示例)
+- [7. 文档](#7-文档)
+- [8. 贡献](#8-贡献)
+- [9. Star 历史](#9-star-历史)
+- [10. 许可](#10-许可)
 
-When agents work on the same project one after another, each new agent starts blind: it either re-reads the whole codebase (expensive in tokens) or guesses what the last one did (dangerous). Every tool also keeps its own private memory — Claude Code, Codex, Cursor don't share it. Files inside the repo are the only storage every agent can already read and write.
+## 1. 这是什么
 
-## How it works
+![工作机制](assets/how-it-works.svg)
 
-Two files under `.memory/`:
+三个角色，各司其职：
 
-| File | Role | Rule |
+- **`.memory/STATE.md`** — 当前状态的活文档，直接改写永不追加，全文 ≤ 50 行，接手者只读它就能接上
+- **`.memory/LOG.md`** — 追加式交接日志，最新在上，每条 ≤ 10 行，只在需要历史细节时翻
+- **`AGENTS.md` 协议段** — 让所有 agent（装没装 skill 的都算）自动遵守同一套读写纪律
+
+记忆文件随仓库进 git——克隆即共享，这是所有 agent 天生就能读写的唯一存储。
+
+## 2. 为什么是文件，不是记忆服务
+
+| | team-memory | MemOS / mem0 / Letta |
 |---|---|---|
-| `.memory/STATE.md` | Living snapshot of current status | Rewrite in place, never append, ≤ 50 lines. The only file a new agent must read. |
-| `.memory/LOG.md` | Append-only handoff log | Newest entry on top, each ≤ 10 lines. Read only when history detail is needed. |
+| 形态 | 仓库里两个 Markdown 文件 | 数据库 + 服务 + SDK |
+| 依赖 | 只要会用 git | 部署、运维、API key |
+| 跨工具 | 天然共享（所有 agent 都会读写文件） | 需要逐个接入 |
+| 记忆规模 | 一个项目的交接结论 | 海量长期记忆 |
+| 适合 | 个人 / 小团队的多 agent 接力协作 | 产品级海量会话记忆 |
 
-Details too big for an entry go into git commit messages — memory files carry conclusions and file lists, not process recordings.
+重方案解决的是"海量记忆怎么存取调度"；team-memory 解决的是更常见的那件事——
+**下一个 agent 怎么花最少的 token 接上进度**。光谱两端，不冲突，还能互相喂种子数据。
 
-## Quick start
+## 3. 快速开始
 
-**As a skill** (your agent scaffolds and follows the protocol automatically):
+### 3.1 脚本安装（推荐）
 
 ```bash
-# ZCode
-git clone --depth 1 https://github.com/sdh0219/team-memory ~/.zcode/skills/team-memory
-
-# Cross-agent directory (Claude Code / Codex / …)
-git clone --depth 1 https://github.com/sdh0219/team-memory ~/.agents/skills/team-memory
-
-# Claude Code
-git clone --depth 1 https://github.com/sdh0219/team-memory ~/.claude/skills/team-memory
+git clone --depth 1 https://github.com/sdh0219/team-memory
+cd team-memory
+bash scripts/install.sh           # 装到全部三个技能目录
+bash scripts/install.sh --zcode   # 或只装某一个：--zcode / --agents / --claude
 ```
 
-Then tell your agent: “初始化 team-memory 记忆层” / "set up team-memory for this project".
+Windows（PowerShell）：
 
-**Without any skill**, paste the protocol below into your project's `AGENTS.md` and create the two files.
+```powershell
+git clone --depth 1 https://github.com/sdh0219/team-memory
+cd team-memory
+powershell -File scripts\install.ps1              # 默认全部
+powershell -File scripts\install.ps1 -Target zcode # 或指定：zcode / agents / claude
+```
 
-## The protocol
+装好后对 agent 说一句「给这个项目初始化 team-memory 记忆层」即可。
+
+### 3.2 手动安装
+
+把 `skills/team-memory/` 整个目录复制到你 agent 的技能目录
+（`~/.zcode/skills/`、`~/.agents/skills/` 或 `~/.claude/skills/`）。
+
+### 3.3 不装 skill，只取协议
+
+把 [协议原文](#5-协议原文) 粘进项目的 `AGENTS.md`，再照
+[examples/](examples/) 建两个记忆文件就行——协议本身不依赖任何工具。
+
+## 4. 工作机制
+
+`.memory/` 下两个文件，分工明确：
+
+| 文件 | 角色 | 规则 |
+|---|---|---|
+| `STATE.md` | 当前状态的活文档 | 直接改写、永不追加，全文 ≤ 50 行 |
+| `LOG.md` | 追加式交接日志 | 最新在最上，每条 ≤ 10 行 |
+
+收工时往 `LOG.md` 顶部写一条：
+
+```
+## 2026-10-25 21:40 · Codex
+- 做了：微信支付回调验签打通，notify_url 能正确落库
+- 改动：pay/wechat/callback.py、tests/test_wechat_callback.py
+- 遗留：退款流程未动；验签密钥走环境变量 WECHAT_PAY_KEY，别写死
+```
+
+三条纪律撑起整个协议：**STATE 改写不追加，LOG 只追加不修改，细节进 commit message**。
+完整规范见 [docs/protocol.md](docs/protocol.md)。
+
+## 5. 协议原文
+
+把这段放进项目 `AGENTS.md`（skill 初始化时也会自动写入）：
 
 ```markdown
-## Agent memory protocol (every session)
+## Agent 记忆协议（每个会话必做）
 
-Before work:
-1. Read .memory/STATE.md (required, very short)
-2. Only if the task needs history detail, check .memory/LOG.md and git log --oneline -15
+开工前：
+1. 读 .memory/STATE.md（必读，很短）
+2. 仅当任务需要历史细节时，再查 .memory/LOG.md 和 git log --oneline -15
 
-Before finishing a milestone:
-1. Update .memory/STATE.md: move done items out of "doing", update "next steps"
-2. Prepend one entry to .memory/LOG.md (date / agent / conclusion / files touched / leftovers), ≤ 10 lines
+收工前（阶段性工作结束）：
+1. 更新 .memory/STATE.md：完成项移出"正在做"，更新"下一步"
+2. 在 .memory/LOG.md 顶部追加一条记录（日期/agent 名/结论/改动文件/遗留），≤ 10 行
 
-Discipline: rewrite STATE.md, never append to it; LOG.md is append-only; details go
-into commit messages; never write secrets or tokens into memory files — they live in git history.
+纪律：STATE.md 直接改写不追加；LOG.md 只追加；细节写进 commit message；
+不把密钥、token 等敏感信息写入记忆文件。
 ```
 
-## 中文说明
+## 6. 示例
 
-让一群 agent 接力干活时不再互相失忆：每个 agent 开工只读 50 行的 `.memory/STATE.md` 就能接上，收工时往 `.memory/LOG.md` 顶部留一条 ≤10 行的蒸馏记录。协议写进项目的 `AGENTS.md`，所以不装任何东西的 agent 也会遵守；装上 skill 则由它自动搭建和执行这套协议。记忆文件随仓库进 git，克隆即共享，零基础设施。
+[examples/](examples/) 里有一个真实感完整示例：一个 Web 项目的
+[AGENTS.md](examples/AGENTS.md)、[STATE.md](examples/memory/STATE.md) 和
+[LOG.md](examples/memory/LOG.md)，照着抄就是了。
 
-## See also
+## 7. 文档
 
-- [MemOS](https://github.com/MemTensor/MemOS) — the heavyweight end: a memory operating system with vector/graph stores and cloud scheduling
-- [AGENTS.md](https://agents.md) — the open standard for agent instruction files, which this protocol ships inside
+- [协议规范](docs/protocol.md) — 两个文件的完整定义、字段表、反模式清单（[English](docs/protocol_EN.md)）
+- [常见问题](docs/faq.md) — 污染历史？并发写？和自带记忆的区别？agent 不听话怎么办？（[English](docs/faq_EN.md)）
 
-## License
+## 8. 贡献
+
+欢迎 issue 和 PR。改 `skills/team-memory/SKILL.md` 的协议内容时，请同步更新
+两个 README 和 docs 里的协议原文，保持四处一致。
+
+## 9. Star 历史
+
+[![Star History Chart](https://api.star-history.com/svg?repos=sdh0219/team-memory&type=Date)](https://star-history.com/#sdh0219/team-memory&Date)
+
+## 10. 许可
 
 [MIT](LICENSE)

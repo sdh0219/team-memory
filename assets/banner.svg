@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-label="team-memory banner">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="0.55" stop-color="#1e1b4b"/>
+      <stop offset="1" stop-color="#4c1d95"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#34d399"/>
+      <stop offset="1" stop-color="#60a5fa"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="300" fill="url(#bg)"/>
+
+  <!-- 两个记忆文件 -->
+  <g font-family="Consolas, 'Courier New', monospace" font-weight="bold">
+    <rect x="150" y="64" width="104" height="124" rx="14" fill="#34d399" opacity="0.92"/>
+    <text x="202" y="132" font-size="20" fill="#0b1220" text-anchor="middle">STATE</text>
+    <rect x="212" y="102" width="104" height="124" rx="14" fill="#60a5fa" opacity="0.92"/>
+    <text x="264" y="170" font-size="20" fill="#0b1220" text-anchor="middle">LOG</text>
+  </g>
+  <line x1="150" y1="252" x2="316" y2="252" stroke="url(#bar)" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- 文字 -->
+  <g font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+    <text x="380" y="128" font-size="62" font-weight="bold" fill="#ffffff">team-memory</text>
+    <text x="380" y="182" font-size="27" fill="#c7d2fe">两个 Markdown 文件 · 一套协议 · 所有 agent 共享记忆</text>
+    <text x="380" y="224" font-size="21" fill="#8b95b0">Two Markdown files. One protocol. Every agent stays in sync.</text>
+  </g>
+</svg>

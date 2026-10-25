@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="400" viewBox="0 0 960 400" role="img" aria-label="team-memory 工作机制示意图">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <!-- 左：三个 agent -->
+  <g font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="19" fill="#0f172a" text-anchor="middle">
+    <rect x="40" y="52"  width="200" height="60" rx="12" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="140" y="89">Claude Code</text>
+    <rect x="40" y="168" width="200" height="60" rx="12" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="140" y="205">Codex</text>
+    <rect x="40" y="284" width="200" height="60" rx="12" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="140" y="321">Cursor / 任意 agent</text>
+  </g>
+
+  <!-- agent → 记忆层 双向箭头 -->
+  <g stroke="#475569" stroke-width="2.5" fill="none">
+    <line x1="244" y1="82"  x2="376" y2="150" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+    <line x1="244" y1="198" x2="376" y2="198" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+    <line x1="244" y1="314" x2="376" y2="246" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  </g>
+  <text x="300" y="128" font-family="'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" fill="#64748b" text-anchor="middle">开工读</text>
+  <text x="300" y="266" font-family="'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" fill="#64748b" text-anchor="middle">收工写</text>
+
+  <!-- 中：.memory/ -->
+  <g text-anchor="middle">
+    <rect x="380" y="96" width="270" height="206" rx="16" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+    <text x="515" y="134" font-family="Consolas, monospace" font-size="24" font-weight="bold" fill="#3730a3">.memory/</text>
+    <rect x="404" y="152" width="222" height="56" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="1.5"/>
+    <text x="515" y="175" font-family="Consolas, monospace" font-size="17" font-weight="bold" fill="#065f46">STATE.md</text>
+    <text x="515" y="197" font-family="'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#047857">活文档 ≤ 50 行 · 接手必读</text>
+    <rect x="404" y="222" width="222" height="56" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="515" y="245" font-family="Consolas, monospace" font-size="17" font-weight="bold" fill="#1e40af">LOG.md</text>
+    <text x="515" y="267" font-family="'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#1d4ed8">追加日志 ≤ 10 行/条 · 按需翻阅</text>
+  </g>
+
+  <!-- 记忆层 → git -->
+  <line x1="654" y1="198" x2="756" y2="198" stroke="#475569" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="705" y="182" font-family="Consolas, monospace" font-size="15" fill="#64748b" text-anchor="middle">commit</text>
+
+  <!-- 右：git 仓库 -->
+  <g text-anchor="middle">
+    <rect x="760" y="128" width="170" height="140" rx="16" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+    <text x="845" y="172" font-family="'Segoe UI', sans-serif" font-size="21" font-weight="bold" fill="#92400e">git 仓库</text>
+    <text x="845" y="204" font-family="'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#a16207">记忆文件入库</text>
+    <text x="845" y="228" font-family="'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#a16207">clone 即共享</text>
+    <text x="845" y="252" font-family="'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#a16207">历史由 git 保管</text>
+  </g>
+
+  <!-- git → 协议 → agent 闭环 -->
+  <path d="M 845 124 C 845 30, 140 30, 140 46" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7 6" fill="none" marker-end="url(#arrow)"/>
+  <text x="490" y="38" font-family="'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" fill="#64748b" text-anchor="middle">AGENTS.md 协议约束所有 agent · 新环境 clone 后直接可用</text>
+</svg>
