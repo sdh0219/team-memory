@@ -49,8 +49,17 @@ Three roles:
 - **`.memory/LOG.md`** — append-only handoff log, newest on top, ≤ 10 lines per entry, read on demand
 - **`AGENTS.md` protocol section** — makes every agent (with or without the skill) follow the same read/write discipline
 
+In memory-tier terms: STATE.md is working memory (hot), LOG.md is episodic memory
+(cold), and the AGENTS.md protocol is semantic memory (rules) — two Markdown files
+plus one protocol section make up a complete tiered memory.
+
 Memory files are tracked in git — they travel with the clone, in the one storage every
 agent already knows how to read and write.
+
+This repo is growing into a `team-*` skill family: `team-memory` handles memory (how the
+next agent resumes), `team-digest` handles distillation (weekly/daily digests of LOG +
+git log for the project owner). The install script installs every member under `skills/`
+— future members join automatically.
 
 ## 2. Why files, not a memory service
 
@@ -116,8 +125,9 @@ Finishing a milestone means prepending one entry to `LOG.md`:
 - Leftover: refund flow untouched; signing key comes from env WECHAT_PAY_KEY, never hardcode
 ```
 
-Three disciplines carry the whole protocol: **rewrite STATE, never append; LOG is
-append-only; details go into commit messages**. Full spec in
+Four disciplines carry the whole protocol: **rewrite STATE, never append; LOG is
+append-only; details go into commit messages; a "doing" item untouched for two weeks
+gets updated or moved back**. Full spec in
 [docs/protocol_EN.md](docs/protocol_EN.md).
 
 ## 5. The protocol
@@ -136,7 +146,8 @@ Before finishing a milestone:
 2. Prepend one entry to .memory/LOG.md (date / agent / conclusion / files touched / leftovers), ≤ 10 lines
 
 Discipline: rewrite STATE.md, never append to it; LOG.md is append-only; details go
-into commit messages; never write secrets or tokens into memory files — they live in git history.
+into commit messages; a "doing" item untouched for two weeks gets updated or moved
+back; never write secrets or tokens into memory files — they live in git history.
 ```
 
 ## 6. Examples

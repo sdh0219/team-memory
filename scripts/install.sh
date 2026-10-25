@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
-# team-memory 安装脚本：把 skills/team-memory 复制到各 agent 的技能目录。
+# team-memory 技能家族安装脚本：遍历 skills/ 下所有技能目录（team-memory、team-digest……），
+# 逐一复制到各 agent 的技能目录。
 # 用法: ./install.sh [--zcode|--agents|--claude]   不带参数则装到全部三个目录。
 set -euo pipefail
 
-SRC="$(cd "$(dirname "$0")/.." && pwd)/skills/team-memory"
+SKILLS_DIR="$(cd "$(dirname "$0")/.." && pwd)/skills"
 
-install_to() {
-  local base="$1" dest="$base/team-memory"
+install_skill_to() {
+  local skill="$1" base="$2" dest="$base/$skill"
   # 只允许写入家目录之下，防御 HOME 被设为空值或异常路径
   case "$dest" in
     "$HOME"/*) ;;
@@ -14,8 +15,16 @@ install_to() {
   esac
   mkdir -p "$base"
   rm -rf "$dest"
-  cp -r "$SRC" "$dest"
-  echo "OK 已安装到 $dest"
+  cp -r "$SKILLS_DIR/$skill" "$dest"
+  echo "OK 已安装 $skill 到 $dest"
+}
+
+install_all_to() {
+  local base="$1" skill_path
+  [ -d "$SKILLS_DIR" ] || { echo "找不到技能目录: $SKILLS_DIR"; exit 1; }
+  for skill_path in "$SKILLS_DIR"/*/; do
+    install_skill_to "$(basename "$skill_path")" "$base"
+  done
 }
 
 only=""
@@ -27,10 +36,10 @@ if [ $# -gt 0 ]; then
 fi
 
 case "$only" in
-  zcode)  install_to "$HOME/.zcode/skills" ;;
-  agents) install_to "$HOME/.agents/skills" ;;
-  claude) install_to "$HOME/.claude/skills" ;;
-  "")     install_to "$HOME/.zcode/skills"
-          install_to "$HOME/.agents/skills"
-          install_to "$HOME/.claude/skills" ;;
+  zcode)  install_all_to "$HOME/.zcode/skills" ;;
+  agents) install_all_to "$HOME/.agents/skills" ;;
+  claude) install_all_to "$HOME/.claude/skills" ;;
+  "")     install_all_to "$HOME/.zcode/skills"
+          install_all_to "$HOME/.agents/skills"
+          install_all_to "$HOME/.claude/skills" ;;
 esac

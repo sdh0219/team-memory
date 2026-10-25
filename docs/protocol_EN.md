@@ -14,7 +14,19 @@ Three pieces:
 | Handoff log | `.memory/LOG.md` | Append-only journal; read history details on demand |
 | Protocol section | `AGENTS.md` | Tells every agent when to read, when to write, and how |
 
-## 2. STATE.md rules
+## 2. Memory tiers
+
+The three pieces map onto three tiers of memory:
+
+| Component | Tier | Role |
+|---|---|---|
+| `.memory/STATE.md` | Working memory (hot) | The minimal context loaded every session |
+| `.memory/LOG.md` | Episodic memory (cold) | What happened, retrieved on demand |
+| `AGENTS.md` protocol | Semantic memory (rules) | How the work gets done — rules that don't expire |
+
+The tiering idea borrows from [MemOS](https://arxiv.org/abs/2507.03724), implemented here with two Markdown files and zero infrastructure.
+
+## 3. STATE.md rules
 
 Four fixed sections, none may stay empty for long:
 
@@ -28,8 +40,9 @@ Four fixed sections, none may stay empty for long:
 - Whole file **≤ 50 lines**; if it doesn't fit, you are recording process instead of conclusions
 - **Rewrite in place, never append**: replacing old content with current status is by design; history belongs to LOG.md and git
 - Header notes last update time and author, so staleness is visible at a glance
+- **A "doing" item untouched for over two weeks**: update it with why it stalled, or move it back to "next steps" — stale entries rot the file's credibility
 
-## 3. LOG.md rules
+## 4. LOG.md rules
 
 Fixed three fields per entry, newest at the top:
 
@@ -44,7 +57,7 @@ Fixed three fields per entry, newest at the top:
 - **Append-only, never rewrite**: to correct an old entry, append a correction, don't touch the original
 - On takeover, read only the first 3-5 entries; dig deeper only if genuinely needed
 
-## 4. The AGENTS.md section
+## 5. The AGENTS.md section
 
 Written into the project's `AGENTS.md` at init time (created if missing):
 
@@ -60,22 +73,24 @@ Before finishing a milestone:
 2. Prepend one entry to .memory/LOG.md (date / agent / conclusion / files touched / leftovers), ≤ 10 lines
 
 Discipline: rewrite STATE.md, never append to it; LOG.md is append-only; details go
-into commit messages; never write secrets or tokens into memory files — they live in git history.
+into commit messages; a "doing" item untouched for two weeks gets updated or moved
+back; never write secrets or tokens into memory files — they live in git history.
 ```
 
-## 5. Division of labor with git
+## 6. Division of labor with git
 
 - The final home of detail is the **commit message**: LOG entries keep conclusions, cite commits when needed
 - Memory files **must be tracked**: don't exclude `.memory/` in `.gitignore`; they travel with the clone
 - On concurrent-finish git conflicts, keep both log entries and let the next agent merge
 - Long-lived experiment branches may skip logging; add one summary entry when merging back
 
-## 6. Anti-patterns
+## 7. Anti-patterns
 
 | Anti-pattern | Consequence | Do instead |
 |---|---|---|
 | Appending to STATE.md like a log | Hundreds of lines nobody reads | Rewrite in place, ≤ 50 lines |
 | Process narratives in LOG entries | Dozens of lines each, tokens wasted | Conclusions only, details in commits |
 | Finishing without updating memory | Next agent starts blind | Updating memory matters as much as the code |
+| A "doing" item rotting for weeks | Stale entries rot credibility; nobody trusts STATE | Update why it stalled, or move it back to "next steps" |
 | Secrets/tokens in memory files | In git history forever | Environment variables only |
 | Skill installed but no AGENTS.md section | Agents without the skill don't comply | Put the protocol in AGENTS.md too |

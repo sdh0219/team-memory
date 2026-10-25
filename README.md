@@ -48,7 +48,14 @@
 - **`.memory/LOG.md`** — 追加式交接日志，最新在上，每条 ≤ 10 行，只在需要历史细节时翻
 - **`AGENTS.md` 协议段** — 让所有 agent（装没装 skill 的都算）自动遵守同一套读写纪律
 
+按记忆分层的说法：STATE.md 是工作记忆（热层），LOG.md 是情景记忆（冷层），AGENTS.md
+协议是语义记忆（规则层）——两个 Markdown 文件加一段协议，就是一套完整的分层记忆。
+
 记忆文件随仓库进 git——克隆即共享，这是所有 agent 天生就能读写的唯一存储。
+
+本仓库正在生长为 `team-*` 技能家族：`team-memory` 管记忆——下一个 agent 怎么接手；`team-digest`
+管蒸馏——项目主人怎么看进度（把 LOG + git log 蒸馏成周报/日报）。安装脚本会把 `skills/`
+下所有成员一并装好，后续新成员自动纳入。
 
 ## 2. 为什么是文件，不是记忆服务
 
@@ -113,7 +120,8 @@ powershell -File scripts\install.ps1 -Target zcode # 或指定：zcode / agents 
 - 遗留：退款流程未动；验签密钥走环境变量 WECHAT_PAY_KEY，别写死
 ```
 
-三条纪律撑起整个协议：**STATE 改写不追加，LOG 只追加不修改，细节进 commit message**。
+四条纪律撑起整个协议：**STATE 改写不追加，LOG 只追加不修改，细节进 commit message，
+「正在做」两周没动就更新或回退**。
 完整规范见 [docs/protocol.md](docs/protocol.md)。
 
 ## 5. 协议原文
@@ -132,7 +140,7 @@ powershell -File scripts\install.ps1 -Target zcode # 或指定：zcode / agents 
 2. 在 .memory/LOG.md 顶部追加一条记录（日期/agent 名/结论/改动文件/遗留），≤ 10 行
 
 纪律：STATE.md 直接改写不追加；LOG.md 只追加；细节写进 commit message；
-不把密钥、token 等敏感信息写入记忆文件。
+「正在做」两周没动就更新或回退；不把密钥、token 等敏感信息写入记忆文件。
 ```
 
 ## 6. 示例
