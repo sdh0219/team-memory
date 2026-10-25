@@ -7,7 +7,7 @@
 ```markdown
 # 项目规则
 
-构建：npm run build；测试：npm test（改动后必跑）。
+构建：mvn -q package；测试：mvn test（改动后必跑）。
 src/core/ 目录重构前先问维护者。
 所有金额字段一律用分（int）表示，禁止浮点。
 
